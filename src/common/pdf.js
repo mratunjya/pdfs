@@ -19,14 +19,23 @@ const PDFviewer = styled.div`
 
 const PDFpage = styled.div`
   height: 100%;
-  width: 70%;
+  width: 80%;
+
+  .rpv-core__inner-pages {
+    padding: 20px 0;
+    background-color: #4c4c4c;
+  }
+
+  .rpv-core__inner-page {
+    background-color: #4c4c4c;
+  }
 `;
 
 const ThumbnailsWrapper = styled.div`
   display: flex;
   height: 100%;
   overflow: auto;
-  width: 30%;
+  width: 20%;
   background-color: #eaeaea;
 
   .rpv-thumbnail__list {
@@ -42,11 +51,20 @@ const ThumbnailsWrapper = styled.div`
     }
   }
 
+  .rpv-thumbnail__container {
+    & > img {
+      border-radius: 6px;
+    }
+  }
+
   .rpv-thumbnail__item {
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 8px;
-    overflow: hidden;
-    padding: 0px;
+    padding: 2px;
+  }
+
+  .rpv-thumbnail__item--selected {
+    background-color: #4c4c4c;
   }
 `;
 
@@ -64,7 +82,7 @@ const PDFthumbnailLabel = styled.div`
   min-height: 24px;
 `;
 
-const PDF = () => {
+const PDF = ({ fileUrl }) => {
   const renderCurrentPageLabel = (RenderCurrentPageLabelProps) => (
     <PDFthumbnailLabel>
       {RenderCurrentPageLabelProps.pageIndex + 1}
@@ -79,24 +97,23 @@ const PDF = () => {
   });
   const { Thumbnails } = thumbnailPluginInstance;
 
-  const fileUrl =
-    "/assets/pdf/Operating System Concepts by Abraham Silberschatz, Peter B. Galvin, Greg Gagne.pdf";
-
   return (
     <main>
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
-        <PDFviewer>
-          <ThumbnailsWrapper>
-            <Thumbnails />
-          </ThumbnailsWrapper>
-          <PDFpage>
-            <Viewer
-              fileUrl={fileUrl}
-              plugins={[thumbnailPluginInstance]}
-              withCredentials={true}
-            />
-          </PDFpage>
-        </PDFviewer>
+        {(fileUrl && (
+          <PDFviewer>
+            <ThumbnailsWrapper>
+              <Thumbnails />
+            </ThumbnailsWrapper>
+            <PDFpage>
+              <Viewer
+                fileUrl={fileUrl}
+                plugins={[thumbnailPluginInstance]}
+                withCredentials={true}
+              />
+            </PDFpage>
+          </PDFviewer>
+        )) || <div>PDF not found</div>}
       </Worker>
     </main>
   );
