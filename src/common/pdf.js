@@ -1,11 +1,7 @@
 import { Worker } from "@react-pdf-viewer/core";
 import { Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
-import {
-  thumbnailPlugin,
-  RenderCurrentPageLabel,
-  RenderCurrentPageLabelProps,
-} from "@react-pdf-viewer/thumbnail";
+import { thumbnailPlugin } from "@react-pdf-viewer/thumbnail";
 import "@react-pdf-viewer/thumbnail/lib/styles/index.css";
 import styled from "styled-components";
 
@@ -41,6 +37,7 @@ const ThumbnailsWrapper = styled.div`
   .rpv-thumbnail__list {
     gap: 20px;
     padding: 20px;
+    justify-content: center;
 
     & > div {
       display: flex;
@@ -48,6 +45,15 @@ const ThumbnailsWrapper = styled.div`
       align-items: center;
       justify-content: space-between;
       gap: 6px;
+      align-self: flex-start;
+
+      & > .rpv-thumbnail__label {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
     }
   }
 
@@ -77,20 +83,44 @@ const PDFthumbnailLabel = styled.div`
   display: flex;
   font-size: 12px;
   justify-content: center;
-  padding: 0 8px;
+  padding: 4px 8px;
   min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  width: fit-content;
+`;
+
+const PDFpageTitle = styled.div`
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  color: #000000;
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+  padding: 4px 8px;
+  min-width: 24px;
+  max-width: 105px;
   min-height: 24px;
 `;
 
-const PDF = ({ fileUrl }) => {
+const PDF = ({ fileUrl, pdfPageTitle }) => {
   const renderCurrentPageLabel = (RenderCurrentPageLabelProps) => (
-    <PDFthumbnailLabel>
-      {RenderCurrentPageLabelProps.pageIndex + 1}
-      {` `}
-      {RenderCurrentPageLabelProps.pageLabel !==
-        `${RenderCurrentPageLabelProps.pageIndex + 1}` &&
-        `(${RenderCurrentPageLabelProps.pageLabel})`}
-    </PDFthumbnailLabel>
+    <>
+      {pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1] && (
+        <PDFpageTitle>
+          {pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1]}
+        </PDFpageTitle>
+      )}
+      <PDFthumbnailLabel>
+        {RenderCurrentPageLabelProps.pageIndex + 1}
+        {RenderCurrentPageLabelProps.pageLabel !==
+          `${RenderCurrentPageLabelProps.pageIndex + 1}` && (
+          <>&nbsp;{RenderCurrentPageLabelProps.pageLabel}</>
+        )}
+      </PDFthumbnailLabel>
+    </>
   );
   const thumbnailPluginInstance = thumbnailPlugin({
     renderCurrentPageLabel,
