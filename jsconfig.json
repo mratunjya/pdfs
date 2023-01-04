@@ -36,6 +36,7 @@
       "@public/*": ["./public/*"],
       "@pdf/*": ["./src/assets/pdf/*"],
       "@common/*": ["./src/common/*"],
+      "@meta/*": ["./src/meta/*"],
     }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
