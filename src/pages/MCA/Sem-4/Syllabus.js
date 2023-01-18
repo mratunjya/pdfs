@@ -1,6 +1,6 @@
 import Head from "next/head";
 import PDF from "@common/pdf";
-import { pdfPageTitle } from "@meta/MCA/Sem-4/Syllabus/pdfPageTitle";
+import { pdfPageTitleChosenSubjects } from "@meta/MCA/Sem-4/Syllabus/pdfPageTitleChosenSubjects";
 
 const Syllabus = () => {
   return (
@@ -14,7 +14,7 @@ const Syllabus = () => {
       </Head>
       <PDF
         fileUrl="/assets/pdf/MCA IV Sem Syllabus.pdf"
-        pdfPageTitle={pdfPageTitle}
+        pdfPageTitle={pdfPageTitleChosenSubjects}
       />
     </>
   );
