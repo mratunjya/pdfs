@@ -2,6 +2,13 @@ import Head from "next/head";
 import PDF from "@common/pdf";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import styled from "styled-components";
+
+const PFDwithNoAnchors = styled(PDF)`
+  a {
+    display: none !important;
+  }
+`;
 
 const Syllabus = () => {
   const router = useRouter();
@@ -20,7 +27,7 @@ const Syllabus = () => {
           content="NIT Raipur MCA Mid Sem Examination of 4th Sem 2023"
         />
       </Head>
-      <PDF fileUrl="/assets/pdf/COO Notes.pdf" />
+      <PFDwithNoAnchors fileUrl="/assets/pdf/COO Notes.pdf" noAnchors />
     </>
   );
 };

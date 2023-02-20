@@ -3,7 +3,7 @@ import { Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { thumbnailPlugin } from "@react-pdf-viewer/thumbnail";
 import "@react-pdf-viewer/thumbnail/lib/styles/index.css";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const PDFviewer = styled.div`
   display: flex;
@@ -25,6 +25,15 @@ const PDFpage = styled.div`
   .rpv-core__inner-page {
     background-color: #4c4c4c;
   }
+
+  ${(props) =>
+    props.noAnchors &&
+    css`
+      .rpv-core__annotation--link,
+      .rpv-core__annotation--link * {
+        display: none;
+      }
+    `}
 `;
 
 const ThumbnailsWrapper = styled.div`
@@ -105,7 +114,7 @@ const PDFpageTitle = styled.div`
   min-height: 24px;
 `;
 
-const PDF = ({ fileUrl, pdfPageTitle }) => {
+const PDF = ({ fileUrl, pdfPageTitle, noAnchors }) => {
   const renderCurrentPageLabel = (RenderCurrentPageLabelProps) => (
     <>
       {pdfPageTitle &&
@@ -136,7 +145,7 @@ const PDF = ({ fileUrl, pdfPageTitle }) => {
             <ThumbnailsWrapper>
               <Thumbnails />
             </ThumbnailsWrapper>
-            <PDFpage>
+            <PDFpage noAnchors>
               <Viewer
                 fileUrl={fileUrl}
                 plugins={[thumbnailPluginInstance]}
