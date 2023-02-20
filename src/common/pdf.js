@@ -108,11 +108,12 @@ const PDFpageTitle = styled.div`
 const PDF = ({ fileUrl, pdfPageTitle }) => {
   const renderCurrentPageLabel = (RenderCurrentPageLabelProps) => (
     <>
-      {pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1] && (
-        <PDFpageTitle>
-          {pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1]}
-        </PDFpageTitle>
-      )}
+      {pdfPageTitle &&
+        pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1] && (
+          <PDFpageTitle>
+            {pdfPageTitle[RenderCurrentPageLabelProps.pageIndex + 1]}
+          </PDFpageTitle>
+        )}
       <PDFthumbnailLabel>
         {RenderCurrentPageLabelProps.pageIndex + 1}
         {RenderCurrentPageLabelProps.pageLabel !==
